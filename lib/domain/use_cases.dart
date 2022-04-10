@@ -64,6 +64,52 @@ class CreateCategoryUseCase implements CreateCategory {
 
   @override
   Future<Category> createCategory(Category category) {
-    return _creator.createCategory(category);
+    try {
+      return _creator.createCategory(category);
+    } catch (e) {
+      rethrow;
+    }
+  }
+}
+
+class CreateClothesTypeUseCase implements CreateClothesType {
+  final CreateClothesType _creator;
+  CreateClothesTypeUseCase({required creator}) : _creator = creator;
+
+  @override
+  Future<ClothesType> createClothesType(ClothesType clothesType) {
+    try {
+      return _creator.createClothesType(clothesType);
+    } catch (e) {
+      rethrow;
+    }
+  }
+}
+
+class CreateUniquePieceUseCase implements CreateUniquePiece {
+  final CreateUniquePiece _creator;
+  CreateUniquePieceUseCase({required creator}) : _creator = creator;
+
+  @override
+  Future<UniquePiece> createUniquePiece(UniquePiece uniquePiece) {
+    try {
+      return _creator.createUniquePiece(uniquePiece);
+    } catch (e) {
+      rethrow;
+    }
+  }
+}
+
+class CreateRentUseCase implements CreateRent {
+  final CreateRent _creator;
+  CreateRentUseCase({required creator}) : _creator = creator;
+
+  @override
+  Future<Rent> createRent(Rent rent) {
+    try {
+      return _creator.createRent(rent);
+    } catch (e) {
+      rethrow;
+    }
   }
 }
