@@ -43,8 +43,12 @@ class SearchCustomerUseCase implements SearchCustomer {
 
   @override
   Future<Customer> searchCustomerBy(String searchBy, String searchFor) {
+    RegExp cpfRegex = RegExp(r'\d{11}');
     try {
       if (searchBy != 'cpf' && searchBy != 'name') {
+        throw FieldNotSearchble();
+      }
+      if (searchBy == 'cpf' && !cpfRegex.hasMatch(searchFor)) {
         throw FieldNotSearchble();
       }
       return _creator.searchCustomerBy(searchBy, searchFor);

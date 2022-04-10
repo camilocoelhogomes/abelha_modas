@@ -57,5 +57,15 @@ void main() {
       expect(() => testing.searchCustomerBy('searchBy', 'searchFor'),
           throwsA(isA<FieldNotSearchble>()));
     });
+    test(
+        'Throw field not searchble when field is a CPF and searchFor isn\'t a cpf',
+        () async {
+      final creator = MockSearchCustomer();
+      SearchCustomerUseCase testing = SearchCustomerUseCase(creator: creator);
+      when(creator.searchCustomerBy(any, any))
+          .thenAnswer((_) async => fakeCustomer);
+      expect(() => testing.searchCustomerBy('cpf', '1234567890'),
+          throwsA(isA<FieldNotSearchble>()));
+    });
   });
 }
