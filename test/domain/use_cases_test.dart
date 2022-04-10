@@ -11,6 +11,7 @@ import 'use_cases_test.mocks.dart';
 @GenerateMocks([RegisterCustomer])
 @GenerateMocks([Customer])
 @GenerateMocks([SearchCustomer])
+@GenerateMocks([CreateCategory])
 void main() {
   group('Test RegisterCustomerUseCase', () {
     test('Create with success', () async {
@@ -37,23 +38,23 @@ void main() {
       final creator = MockSearchCustomer();
       SearchCustomerUseCase testing = SearchCustomerUseCase(creator: creator);
       when(creator.searchCustomerBy(any, any))
-          .thenAnswer((_) async => fakeCustomer);
+          .thenAnswer((_) async => [fakeCustomer]);
       final result = await testing.searchCustomerBy('cpf', '12345678900');
-      expect(result, isA<Customer>());
+      expect(result, isA<List<Customer>>());
     });
     test('Search Whith Success by name', () async {
       final creator = MockSearchCustomer();
       SearchCustomerUseCase testing = SearchCustomerUseCase(creator: creator);
       when(creator.searchCustomerBy(any, any))
-          .thenAnswer((_) async => fakeCustomer);
+          .thenAnswer((_) async => [fakeCustomer]);
       final result = await testing.searchCustomerBy('name', '12345678900');
-      expect(result, isA<Customer>());
+      expect(result, isA<List<Customer>>());
     });
     test('Throw field not searchble', () async {
       final creator = MockSearchCustomer();
       SearchCustomerUseCase testing = SearchCustomerUseCase(creator: creator);
       when(creator.searchCustomerBy(any, any))
-          .thenAnswer((_) async => fakeCustomer);
+          .thenAnswer((_) async => [fakeCustomer]);
       expect(() => testing.searchCustomerBy('searchBy', 'searchFor'),
           throwsA(isA<FieldNotSearchble>()));
     });
@@ -63,9 +64,32 @@ void main() {
       final creator = MockSearchCustomer();
       SearchCustomerUseCase testing = SearchCustomerUseCase(creator: creator);
       when(creator.searchCustomerBy(any, any))
-          .thenAnswer((_) async => fakeCustomer);
+          .thenAnswer((_) async => [fakeCustomer]);
       expect(() => testing.searchCustomerBy('cpf', '1234567890'),
           throwsA(isA<FieldNotSearchble>()));
+    });
+    test('Rethrow the error', () async {
+      final creator = MockSearchCustomer();
+      SearchCustomerUseCase testing = SearchCustomerUseCase(creator: creator);
+      when(creator.searchCustomerBy(any, any)).thenThrow(Exception);
+      expect(() => testing.searchCustomerBy('cpf', '12345678900'),
+          throwsA(Exception));
+    });
+  });
+  group('Create Category', () {
+    test('Create the category', () async {
+      final creator = MockCreateCategory();
+      CreateCategoryUseCase testing = CreateCategoryUseCase(creator: creator);
+      when(creator.createCategory(any)).thenAnswer((_) async => fakeCategory);
+      Category result = await testing.createCategory(fakeCategory);
+      expect(result, isA<Category>());
+    });
+
+    test('Rethrow the recived error', () async {
+      final creator = MockCreateCategory();
+      CreateCategoryUseCase testing = CreateCategoryUseCase(creator: creator);
+      when(creator.createCategory(any)).thenThrow(Exception);
+      expect(() => testing.createCategory(fakeCategory), throwsA(Exception));
     });
   });
 }

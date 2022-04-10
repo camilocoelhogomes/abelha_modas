@@ -22,6 +22,8 @@ class _FakeCustomer_0 extends _i1.Fake implements _i2.Customer {}
 
 class _FakeAddress_1 extends _i1.Fake implements _i2.Address {}
 
+class _FakeCategory_2 extends _i1.Fake implements _i2.Category {}
+
 /// A class which mocks [RegisterCustomer].
 ///
 /// See the documentation for Mockito's code generation for more information.
@@ -87,10 +89,25 @@ class MockSearchCustomer extends _i1.Mock implements _i3.SearchCustomer {
   }
 
   @override
-  _i4.Future<_i2.Customer> searchCustomerBy(
-          String? searchFor, String? searchBy) =>
+  _i4.Future<List<_i2.Customer>> searchCustomerBy(
+          String? searchBy, String? searchFor) =>
       (super.noSuchMethod(
-              Invocation.method(#searchCustomerBy, [searchFor, searchBy]),
-              returnValue: Future<_i2.Customer>.value(_FakeCustomer_0()))
-          as _i4.Future<_i2.Customer>);
+              Invocation.method(#searchCustomerBy, [searchBy, searchFor]),
+              returnValue: Future<List<_i2.Customer>>.value(<_i2.Customer>[]))
+          as _i4.Future<List<_i2.Customer>>);
+}
+
+/// A class which mocks [CreateCategory].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockCreateCategory extends _i1.Mock implements _i3.CreateCategory {
+  MockCreateCategory() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<_i2.Category> createCategory(_i2.Category? category) =>
+      (super.noSuchMethod(Invocation.method(#createCategory, [category]),
+              returnValue: Future<_i2.Category>.value(_FakeCategory_2()))
+          as _i4.Future<_i2.Category>);
 }

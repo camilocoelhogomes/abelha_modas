@@ -15,3 +15,8 @@ entities.Customer fakeCustomer = entities.Customer(
     phoneNumber: faker.phoneNumber.us(),
     cpf: faker.randomGenerator.fromPattern([r'\d{11}']),
     address: fakeAddress);
+
+entities.Category fakeCategory = entities.Category(
+    description: faker.randomGenerator.string(140),
+    name: faker.food.cuisine(),
+    priceInCentsPerDay: faker.randomGenerator.integer(5000));
