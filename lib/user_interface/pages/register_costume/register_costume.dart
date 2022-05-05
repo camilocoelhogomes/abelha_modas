@@ -32,10 +32,19 @@ class RegisterCategoryForm extends StatefulWidget {
   State<RegisterCategoryForm> createState() => _RegisterCategoryFormState();
 }
 
-class CategoryEditingController {
-  TextEditingController name = TextEditingController();
-  TextEditingController description = TextEditingController();
-  TextEditingController priceInCentsPerDay = TextEditingController();
+class CategoryEditingController extends Category {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController priceInCentsPerDayController = TextEditingController();
+
+  CategoryEditingController(
+      {super.name = '', super.description = '', super.priceInCentsPerDay = 0}) {
+    nameController.addListener(_setName);
+  }
+
+  void _setName() {
+    super.name = nameController.text;
+  }
 }
 
 class _RegisterCategoryFormState extends State<RegisterCategoryForm> {
@@ -59,9 +68,7 @@ class _RegisterCategoryFormState extends State<RegisterCategoryForm> {
                     child: CustomFormField(
                       hintText: 'Papai Noel',
                       label: 'Nome da Categoria',
-                      controller: controllers.name,
-                      validator: (String? name) =>
-                          name == null ? null : 'adicione um nome',
+                      controller: controllers.nameController,
                     ),
                   ),
                 ),
@@ -70,16 +77,14 @@ class _RegisterCategoryFormState extends State<RegisterCategoryForm> {
                   child: CustomFormField(
                     hintText: 'R\$ 15,00',
                     label: 'Aluguel por dia',
-                    controller: controllers.priceInCentsPerDay,
-                    validator: (String? name) =>
-                        name == null ? null : 'adicione um nome',
+                    controller: controllers.priceInCentsPerDayController,
                     keyboardType: const TextInputType.numberWithOptions(),
                   ),
                 ),
               ],
             ),
             CustomFormField(
-              controller: controllers.description,
+              controller: controllers.descriptionController,
               hintText: 'Descreva a Categoria',
               label: 'Descrição',
             ),
@@ -89,10 +94,9 @@ class _RegisterCategoryFormState extends State<RegisterCategoryForm> {
                 onPressed: () {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState!.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
+                    print(controllers.name);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
+                      SnackBar(content: Text(controllers.name)),
                     );
                   }
                 },
