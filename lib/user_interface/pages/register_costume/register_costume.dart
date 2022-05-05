@@ -33,13 +33,20 @@ class RegisterCategoryForm extends StatefulWidget {
 }
 
 class CategoryEditingController extends Category {
+  final Category? oldCategory;
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceInCentsPerDayController = TextEditingController();
-
   CategoryEditingController(
-      {super.name = '', super.description = '', super.priceInCentsPerDay = 0}) {
+      {super.name = '',
+      super.description = '',
+      super.priceInCentsPerDay = 0,
+      this.oldCategory}) {
     nameController.addListener(_setName);
+    if (oldCategory != null) {
+      super.name = oldCategory!.name;
+      nameController.text = oldCategory!.name;
+    }
   }
 
   void _setName() {
@@ -49,7 +56,12 @@ class CategoryEditingController extends Category {
 
 class _RegisterCategoryFormState extends State<RegisterCategoryForm> {
   final _formKey = GlobalKey<FormState>();
-  CategoryEditingController controllers = CategoryEditingController();
+  CategoryEditingController controllers = CategoryEditingController(
+      oldCategory: Category(
+    name: 'Camilo',
+    description: 'description',
+    priceInCentsPerDay: 0,
+  ));
   @override
   Widget build(BuildContext context) {
     return Form(
