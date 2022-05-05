@@ -33,49 +33,7 @@ void main() {
     });
   });
 
-  group('SearchCustomerUseCase', () {
-    test('Search Whith Success by cpf', () async {
-      final creator = MockSearchCustomer();
-      SearchCustomerUseCase testing = SearchCustomerUseCase(creator: creator);
-      when(creator.searchCustomerBy(any, any))
-          .thenAnswer((_) async => [fakeCustomer]);
-      final result = await testing.searchCustomerBy('cpf', '12345678900');
-      expect(result, isA<List<Customer>>());
-    });
-    test('Search Whith Success by name', () async {
-      final creator = MockSearchCustomer();
-      SearchCustomerUseCase testing = SearchCustomerUseCase(creator: creator);
-      when(creator.searchCustomerBy(any, any))
-          .thenAnswer((_) async => [fakeCustomer]);
-      final result = await testing.searchCustomerBy('name', '12345678900');
-      expect(result, isA<List<Customer>>());
-    });
-    test('Throw field not searchble', () async {
-      final creator = MockSearchCustomer();
-      SearchCustomerUseCase testing = SearchCustomerUseCase(creator: creator);
-      when(creator.searchCustomerBy(any, any))
-          .thenAnswer((_) async => [fakeCustomer]);
-      expect(() => testing.searchCustomerBy('searchBy', 'searchFor'),
-          throwsA(isA<FieldNotSearchble>()));
-    });
-    test(
-        'Throw field not searchble when field is a CPF and searchFor isn\'t a cpf',
-        () async {
-      final creator = MockSearchCustomer();
-      SearchCustomerUseCase testing = SearchCustomerUseCase(creator: creator);
-      when(creator.searchCustomerBy(any, any))
-          .thenAnswer((_) async => [fakeCustomer]);
-      expect(() => testing.searchCustomerBy('cpf', '1234567890'),
-          throwsA(isA<FieldNotSearchble>()));
-    });
-    test('Rethrow the error', () async {
-      final creator = MockSearchCustomer();
-      SearchCustomerUseCase testing = SearchCustomerUseCase(creator: creator);
-      when(creator.searchCustomerBy(any, any)).thenThrow(Exception);
-      expect(() => testing.searchCustomerBy('cpf', '12345678900'),
-          throwsA(Exception));
-    });
-  });
+  group('SearchCustomerUseCase', () {});
   group('Create Category', () {
     test('Create the category', () async {
       final creator = MockCreateCategory();

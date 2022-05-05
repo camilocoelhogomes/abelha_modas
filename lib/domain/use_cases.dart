@@ -6,7 +6,7 @@ abstract class RegisterCustomer {
 }
 
 abstract class SearchCustomer {
-  Future<List<Customer>> searchCustomerBy(String searchBy, String searchFor);
+  Future<List<Customer>> searchCustomer(String searchFor);
 }
 
 abstract class CreateCategory {
@@ -42,16 +42,10 @@ class SearchCustomerUseCase implements SearchCustomer {
   SearchCustomerUseCase({required creator}) : _creator = creator;
 
   @override
-  Future<List<Customer>> searchCustomerBy(String searchBy, String searchFor) {
+  Future<List<Customer>> searchCustomer(String searchFor) {
     RegExp cpfRegex = RegExp(r'\d{11}');
     try {
-      if (searchBy != 'cpf' && searchBy != 'name') {
-        throw FieldNotSearchble(message: 'search by needs to be cpf or name');
-      }
-      if (searchBy == 'cpf' && !cpfRegex.hasMatch(searchFor)) {
-        throw FieldNotSearchble(message: 'cpf don\'t match regex \'\\d{11}\'');
-      }
-      return _creator.searchCustomerBy(searchBy, searchFor);
+      return _creator.searchCustomer(searchFor);
     } catch (e) {
       rethrow;
     }
