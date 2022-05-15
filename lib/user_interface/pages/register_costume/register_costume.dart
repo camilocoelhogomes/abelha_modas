@@ -1,7 +1,5 @@
 import 'package:abelha_modas/domain/entities.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 
 class RegisterCostumePage extends StatefulWidget {
   const RegisterCostumePage({super.key});
@@ -37,20 +35,25 @@ class CategoryEditingController extends Category {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceInCentsPerDayController = TextEditingController();
+
   CategoryEditingController(
       {super.name = '',
       super.description = '',
       super.priceInCentsPerDay = 0,
       this.oldCategory}) {
-    nameController.addListener(_setName);
     if (oldCategory != null) {
-      super.name = oldCategory!.name;
       nameController.text = oldCategory!.name;
+      descriptionController.text = oldCategory!.description;
+      priceInCentsPerDayController.text =
+          oldCategory!.priceInCentsPerDay.toString();
     }
   }
 
-  void _setName() {
+  Category get category {
     super.name = nameController.text;
+    super.description = descriptionController.text;
+    super.priceInCentsPerDay = int.parse(priceInCentsPerDayController.text);
+    return this;
   }
 }
 
@@ -106,7 +109,6 @@ class _RegisterCategoryFormState extends State<RegisterCategoryForm> {
                 onPressed: () {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState!.validate()) {
-                    print(controllers.name);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(controllers.name)),
                     );
